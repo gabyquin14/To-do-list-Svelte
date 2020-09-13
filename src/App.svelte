@@ -1,4 +1,6 @@
 <script>
+  import { text } from "svelte/internal";
+
   let guardarItem = [];
   let name = "";
 
@@ -6,7 +8,7 @@
     var event = window.event || handleClick.caller.arguments[0];
     event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 
-    guardarItem = [...guardarItem, name];
+    guardarItem = guardarItem.concat({ done: false, name });
     name = "";
 
     return false;
@@ -34,6 +36,10 @@
     padding: 10px 0;
   }
 
+  label input[type="checkbox"]:checked + span {
+    text-decoration: line-through;
+  }
+
   h4 button {
     float: right;
     cursor: pointer;
@@ -58,7 +64,7 @@
     justify-content: center;
   }
 
-  input {
+  form input {
     outline: none;
     width: 550px;
     border: none;
@@ -72,7 +78,7 @@
     box-sizing: border-box;
   }
 
-  input::placeholder {
+  form input::placeholder {
     color: #00070d;
     font-weight: 400;
   }
@@ -94,7 +100,6 @@
 </style>
 
 <main>
-
   <h1>Please input your groceries</h1>
 
   <form id="formita">
@@ -102,19 +107,23 @@
     <input type="text" bind:value={name} placeholder="Write here..." />
 
     <button on:click={handleClick}>Add Item</button>
-
   </form>
 
   {#each guardarItem as item, i}
     <h4>
-      {i + 1}.- {item}
-      <button
-        on:click={() => {
-          deleteItem(i);
-        }}>
-        <i class="fa fa-times" aria-hidden="true" />
-      </button>
+      <label>
+        <input type="checkbox" bind:checked={item.done} />
+        <span>{i + 1}.- {item.name}</span>
+      </label>
+      {#if !item.done}
+        <button
+          disabled={!item.done}
+          on:click={() => {
+            deleteItem(i);
+          }}>
+          <i class="fa fa-times" aria-hidden="true" />
+        </button>
+      {/if}
     </h4>
   {/each}
-
 </main>
