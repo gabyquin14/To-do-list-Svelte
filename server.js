@@ -14,6 +14,10 @@ const page = (req, res) => {
     <head>
       <link rel='stylesheet' href='/global.css'>
       <link rel='stylesheet' href='/bundle.css'>
+      <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css"/>
+    
     </head>
     <body>
       <div id="app"></div>
@@ -22,7 +26,7 @@ const page = (req, res) => {
   `);
 
   res.end();
-}
+};
 
 server.get("*", page);
 

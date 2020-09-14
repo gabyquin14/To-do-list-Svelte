@@ -312,7 +312,6 @@ var app = (function () {
     function create_if_block(ctx) {
     	let button;
     	let i;
-    	let button_disabled_value;
     	let mounted;
     	let dispose;
 
@@ -327,7 +326,7 @@ var app = (function () {
     			this.h();
     		},
     		l(nodes) {
-    			button = claim_element(nodes, "BUTTON", { disabled: true, class: true });
+    			button = claim_element(nodes, "BUTTON", { class: true });
     			var button_nodes = children(button);
     			i = claim_element(button_nodes, "I", { class: true, "aria-hidden": true });
     			children(i).forEach(detach);
@@ -337,7 +336,6 @@ var app = (function () {
     		h() {
     			attr(i, "class", "fa fa-times");
     			attr(i, "aria-hidden", "true");
-    			button.disabled = button_disabled_value = !/*item*/ ctx[7].done;
     			attr(button, "class", "svelte-xcp617");
     		},
     		m(target, anchor) {
@@ -351,10 +349,6 @@ var app = (function () {
     		},
     		p(new_ctx, dirty) {
     			ctx = new_ctx;
-
-    			if (dirty & /*guardarItem*/ 1 && button_disabled_value !== (button_disabled_value = !/*item*/ ctx[7].done)) {
-    				button.disabled = button_disabled_value;
-    			}
     		},
     		d(detaching) {
     			if (detaching) detach(button);
@@ -600,7 +594,7 @@ var app = (function () {
     				set_input_value(input, /*name*/ ctx[1]);
     			}
 
-    			if (dirty & /*guardarItem, deleteItem*/ 9) {
+    			if (dirty & /*deleteItem, guardarItem*/ 9) {
     				each_value = /*guardarItem*/ ctx[0];
     				let i;
 

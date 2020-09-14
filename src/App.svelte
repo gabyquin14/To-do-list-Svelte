@@ -117,7 +117,6 @@
       </label>
       {#if !item.done}
         <button
-          disabled={!item.done}
           on:click={() => {
             deleteItem(i);
           }}>
